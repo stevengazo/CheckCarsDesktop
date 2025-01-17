@@ -74,6 +74,7 @@
         <TextBox
             Grid.Row="1"
             Margin="10,10,10,10"
+            Text="{Binding Email}"
             Style="{StaticResource TextBoxStyle}" />
 
         <Label
@@ -84,6 +85,7 @@
         <TextBox
             Grid.Row="3"
             Margin="10,10,10,10"
+            Text="{Binding Password}"
             Style="{StaticResource TextBoxStyle}" />
 
         <StackPanel
@@ -91,7 +93,7 @@
             Margin="0,10,0,10"
             Style="{StaticResource StackPanelStyle}">
             <Label VerticalAlignment="Center" Content="Recordar" />
-            <CheckBox VerticalAlignment="Center" />
+            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Remember}" />
         </StackPanel>
 
         <Button

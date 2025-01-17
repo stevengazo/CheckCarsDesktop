@@ -52,6 +52,8 @@ namespace CheckCarsDesktop.Services
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(endpoint, content, cts?.Token ?? CancellationToken.None);
 
+                
+
                 return response.IsSuccessStatusCode;
             }
             catch (Exception e)
