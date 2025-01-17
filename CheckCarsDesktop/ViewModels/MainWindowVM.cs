@@ -88,8 +88,8 @@ namespace CheckCarsDesktop.ViewModels
             var user = _storage.LoadCredentials();
             if (user != null)
             {
-                SharedData.Token = user.AuthToken;
-                Email = user.AuthToken;
+               // SharedData.Token = user.AuthToken;
+                Email = user.Username;
                 Password = user.pass;
                 Remember = user.SaveUserName;
 
