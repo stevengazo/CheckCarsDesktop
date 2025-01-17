@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CheckCarsDesktop.Services
 {
-    class UserCredentialsStorage
+   class UserCredentialsStorage
     {
         private readonly string _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "userCredentials.json");
 

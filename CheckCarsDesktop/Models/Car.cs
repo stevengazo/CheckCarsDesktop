@@ -1,5 +1,5 @@
 ﻿
-namespace CheckCarsAPI.Models
+namespace CheckCarsDesktop.Models
 {
     public class Car
     {

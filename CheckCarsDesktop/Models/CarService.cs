@@ -1,4 +1,4 @@
-﻿namespace CheckCarsAPI.Models
+﻿namespace CheckCarsDesktop.Models
 {
     public class CarService
     {

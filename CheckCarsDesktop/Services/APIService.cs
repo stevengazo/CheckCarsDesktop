@@ -22,6 +22,22 @@ namespace CheckCarsDesktop.Services
             };
         }
 
+        private void AddAuthorizationHeader()
+        {
+            if (!string.IsNullOrEmpty(Token))
+            {
+                // Si el token existe, se agrega al encabezado
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Token);
+            }
+        }
+        public async Task<T?> GetAsync<T>(string endpoint, TimeSpan? timeout = null, bool useToken = false)
+        {
+            if(useToken)
+            {
+                AddAuthorizationHeader();
+            }
+           return await GetAsync<T>(endpoint, timeout);
+        }
         public async Task<T?> GetAsync<T>(string endpoint, TimeSpan? timeout = null)
         {
             try

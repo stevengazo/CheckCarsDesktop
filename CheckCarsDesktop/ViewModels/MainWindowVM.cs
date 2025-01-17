@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CheckCarsDesktop.Shared.Data;
+using CheckCarsDesktop.Models;
 
 namespace CheckCarsDesktop.ViewModels
 {
@@ -21,8 +23,10 @@ namespace CheckCarsDesktop.ViewModels
             LoginCommand = new RelayCommand(LoginAsync);
             ResetPasswordCommand = new RelayCommand(ResetPassword);
             CloseCommand = new RelayCommand(ExecuteCloseCommand);
+            LoadDefault();
         }
-        
+
+    
         #region Actions 
         public Action CloseWindowAction { get; set; }
         #endregion
@@ -79,6 +83,19 @@ namespace CheckCarsDesktop.ViewModels
         #endregion
 
         #region Methods
+        private void LoadDefault()
+        {
+            var user = _storage.LoadCredentials();
+            if (user != null)
+            {
+                SharedData.Token = user.AuthToken;
+                Email = user.AuthToken;
+                Password = user.pass;
+                Remember = user.SaveUserName;
+
+            }
+        }
+
         private async void ResetPassword(object? obj)
         {
             var inputDialog = new InputDialog("Recuperación de Contraseña", "Ingresa tu correo electrónico:");
@@ -105,9 +122,26 @@ namespace CheckCarsDesktop.ViewModels
                 var response = await aPIService.PostAsync("/api/Account/login", request, TimeSpan.FromSeconds(4));
                 if (response != null)
                 {
-
                     var token = JsonConvert.DeserializeObject<ResponseToken>(response);
+                    SharedData.Token = token.Token;
 
+                    
+                    if (Remember)
+                    {
+                        UserCredentials userCredentials = new UserCredentials();
+                        userCredentials.Username = Email;
+                        userCredentials.AuthToken= token.Token; 
+                        userCredentials.SaveUserName= Remember;
+                        userCredentials.pass = Password;
+                        _storage.SaveCredentials(userCredentials);
+                    }
+                    else
+                    {
+                        _storage.ClearCredentials();
+                    }
+
+
+                  
 
                     Home mainWindow = new();
                     mainWindow.Show();

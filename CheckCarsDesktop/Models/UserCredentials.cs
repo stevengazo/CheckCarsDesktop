@@ -10,6 +10,7 @@ namespace CheckCarsDesktop.Models
     {
         public string Username { get; set; }
         public string AuthToken { get; set; }
+        public string pass { get; set; }
         public bool SaveUserName { get; set; }
 
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CheckCarsAPI.Models
+namespace CheckCarsDesktop.Models
 {
     public class IssueReport: Report
     {
