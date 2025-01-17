@@ -1,0 +1,66 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CheckCarsDesktop.Services
+{
+    public class APIService
+    {
+        public string Token { get; set; }
+        private readonly HttpClient _httpClient;
+
+        public APIService(TimeSpan? timeout = null)
+        {
+           _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri($"https://mecsacars.digitops.co.cr/"),
+                Timeout = timeout ?? TimeSpan.FromSeconds(100) // Configuración predeterminada de tiempo de espera
+            };
+        }
+
+        public async Task<T?> GetAsync<T>(string endpoint, TimeSpan? timeout = null)
+        {
+            try
+            {
+                using var cts = timeout.HasValue ? new CancellationTokenSource(timeout.Value) : null;
+                var response = await _httpClient.GetAsync(endpoint, cts?.Token ?? CancellationToken.None);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<T>(json);
+                }
+                return default;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error en GET: {e.Message}");
+                return default;
+            }
+        }
+
+        public async Task<bool> PostAsync<T>(string endpoint, T data, TimeSpan? timeout = null)
+        {
+            try
+            {
+                using var cts = timeout.HasValue ? new CancellationTokenSource(timeout.Value) : null;
+                var json = JsonConvert.SerializeObject(data);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(endpoint, content, cts?.Token ?? CancellationToken.None);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error en POST: {e.Message}");
+                return false;
+            }
+        }
+     
+    }
+
+}
