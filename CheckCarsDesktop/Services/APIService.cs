@@ -17,7 +17,7 @@ namespace CheckCarsDesktop.Services
         {
            _httpClient = new HttpClient
             {
-                BaseAddress = new Uri($"https://mecsacars.digitops.co.cr/"),
+                BaseAddress = new Uri($"https://mecsacars.stevengazo.co.cr/"),
                 Timeout = timeout ?? TimeSpan.FromSeconds(100) // Configuración predeterminada de tiempo de espera
             };
         }
@@ -43,7 +43,7 @@ namespace CheckCarsDesktop.Services
             }
         }
 
-        public async Task<bool> PostAsync<T>(string endpoint, T data, TimeSpan? timeout = null)
+        public async Task<string?> PostAsync<T>(string endpoint, T data, TimeSpan? timeout = null)
         {
             try
             {
@@ -52,17 +52,24 @@ namespace CheckCarsDesktop.Services
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(endpoint, content, cts?.Token ?? CancellationToken.None);
 
-                
+                var responseBody = await response.Content.ReadAsStringAsync();
 
-                return response.IsSuccessStatusCode;
+                if (response.IsSuccessStatusCode)
+                {
+                    return responseBody;
+                }
+
+                Console.WriteLine($"Error en POST: {response.StatusCode} - {responseBody}");
+                return null;
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Error en POST: {e.Message}");
-                return false;
+                return null;
             }
         }
-     
+
+
     }
 
 }

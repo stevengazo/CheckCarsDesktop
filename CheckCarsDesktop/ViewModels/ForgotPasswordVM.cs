@@ -87,7 +87,7 @@ namespace CheckCarsDesktop.ViewModels
                 try
                 {
                   var response =  await apIService.PostAsync("/api/Account/Reset", request, TimeSpan.FromSeconds(10));
-                    if (response)
+                    if (response != null)
                     {
                         CloseWindowCommand.Execute(null);
                     }

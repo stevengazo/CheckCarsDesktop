@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using CheckCarsDesktop.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,15 @@ namespace CheckCarsDesktop
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowVM viewModel)
+            {
+                viewModel.CloseWindowAction = Close; // Asigna la acción de cierre
+            }
         }
     }
 }

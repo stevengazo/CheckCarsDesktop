@@ -3,6 +3,7 @@ using CheckCarsDesktop.Shared.Commands;
 using CheckCarsDesktop.Views;
 using CheckCarsDesktop.Views.Shared;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,26 @@ namespace CheckCarsDesktop.ViewModels
 {
     public class MainWindowVM : ViewModelBase
     {
+        public MainWindowVM()
+        {
+            LoginCommand = new RelayCommand(LoginAsync);
+            ResetPasswordCommand = new RelayCommand(ResetPassword);
+            CloseCommand = new RelayCommand(ExecuteCloseCommand);
+        }
+        
+        #region Actions 
+        public Action CloseWindowAction { get; set; }
+        #endregion
+       
+        #region Commands
+        public ICommand LoginCommand { get; }
+        public ICommand CloseCommand { get; }
+        public ICommand ResetPasswordCommand { get; }
+        #endregion
+
+        #region Properties
         private readonly UserCredentialsStorage _storage = new UserCredentialsStorage();
         private readonly APIService aPIService = new APIService();
-        public ICommand LoginCommand { get; }
-
-        public ICommand ResetPasswordCommand { get; }
-
         private string _email;
         private string _password;
         private bool _Remember;
@@ -61,13 +76,9 @@ namespace CheckCarsDesktop.ViewModels
             }
         }
 
+        #endregion
 
-        public MainWindowVM()
-        {
-            LoginCommand = new RelayCommand(LoginAsync);
-            ResetPasswordCommand = new RelayCommand(ResetPassword);
-        }
-
+        #region Methods
         private async void ResetPassword(object? obj)
         {
             var inputDialog = new InputDialog("Recuperación de Contraseña", "Ingresa tu correo electrónico:");
@@ -82,22 +93,43 @@ namespace CheckCarsDesktop.ViewModels
                 forgotPassword.ShowDialog();
             }
         }
-
         private async void LoginAsync(object? obj)
         {
-            var request = new
+            try
             {
-                email = Email,
-                password = Password
-            };
-            var response = await aPIService.PostAsync("/api/Account/login", request, TimeSpan.FromSeconds(4));
-            if (response)
+                var request = new
+                {
+                    email = Email,
+                    password = Password
+                };
+                var response = await aPIService.PostAsync("/api/Account/login", request, TimeSpan.FromSeconds(4));
+                if (response != null)
+                {
+
+                    var token = JsonConvert.DeserializeObject<ResponseToken>(response);
+
+
+                    Home mainWindow = new();
+                    mainWindow.Show();
+                    CloseCommand.Execute(null);
+                }
+            }
+            catch (Exception e)
             {
 
-                Home mainWindow = new();
-                mainWindow.Show();
+                throw;
             }
 
         }
+        private void ExecuteCloseCommand(object parameter)
+        {
+            CloseWindowAction?.Invoke();
+        }
+        #endregion
+    }
+
+    public class ResponseToken
+    {
+        public string Token { get; set; }
     }
 }

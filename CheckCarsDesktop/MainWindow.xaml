@@ -9,6 +9,7 @@
     Title="Login CheckCars"
     Width="350"
     Height="400"
+    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
@@ -74,8 +75,8 @@
         <TextBox
             Grid.Row="1"
             Margin="10,10,10,10"
-            Text="{Binding Email}"
-            Style="{StaticResource TextBoxStyle}" />
+            Style="{StaticResource TextBoxStyle}"
+            Text="{Binding Email}" />
 
         <Label
             Grid.Row="2"
@@ -85,8 +86,8 @@
         <TextBox
             Grid.Row="3"
             Margin="10,10,10,10"
-            Text="{Binding Password}"
-            Style="{StaticResource TextBoxStyle}" />
+            Style="{StaticResource TextBoxStyle}"
+            Text="{Binding Password}" />
 
         <StackPanel
             Grid.Row="4"
