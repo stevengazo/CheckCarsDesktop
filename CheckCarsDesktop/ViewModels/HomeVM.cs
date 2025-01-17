@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CheckCarsDesktop.ViewModels
 {
-    class HomeVM
+    public class HomeVM : ViewModelBase
     {
+
+
     }
 }
