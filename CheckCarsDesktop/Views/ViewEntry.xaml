@@ -10,9 +10,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Detalles del Reporte de Entrada/Salida"
     Width="600"
+    Height="700"
     MinWidth="400"
     MaxWidth="700"
-    Height="700"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
@@ -93,10 +93,9 @@
                                 CanDragMap="False"
                                 MapProvider="{Binding MapProvider}"
                                 MaxZoom="20"
-                               Zoom="15"
                                 MinZoom="00"
                                 Position="{Binding Ubication}"
-                                 />
+                                Zoom="15" />
                         </StackPanel>
 
                     </StackPanel>

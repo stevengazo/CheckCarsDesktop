@@ -31,8 +31,6 @@ namespace CheckCarsDesktop
             {
                 viewModel.CloseWindowAction = Close; // Asigna la acción de cierre
             }
-
-   
         }
     }
 }
