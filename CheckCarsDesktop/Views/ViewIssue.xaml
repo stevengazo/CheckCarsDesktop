@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:CheckCarsDesktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Información de Problema"
-    Width="800"
+    Width="550"
     Height="450"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -23,7 +23,7 @@
             HorizontalAlignment="Center"
             FontSize="20"
             FontWeight="Bold"
-            Text="Detalles del Reporte de Choque" />
+            Text="Detalles de Reporte de Problemas" />
         <ScrollViewer Margin="0,30,0,0">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
@@ -42,28 +42,28 @@
                             Width="150"
                             FontWeight="Bold"
                             Text="ID del Reporte:" />
-                        <TextBox Width="300" Text="" />
+                        <TextBox Width="300" Text="{Binding Report.ReportId}" />
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal">
                         <TextBlock
                             Width="150"
                             FontWeight="Bold"
                             Text="Autor:" />
-                        <TextBox Width="300" Text="" />
+                        <TextBox Width="300" Text="{Binding Report.Author}" />
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal">
                         <TextBlock
                             Width="150"
                             FontWeight="Bold"
                             Text="Fecha de Creación:" />
-                        <TextBox Width="300" Text="" />
+                        <TextBox Width="300" Text="{Binding Report.Created}" />
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal">
                         <TextBlock
                             Width="150"
                             FontWeight="Bold"
                             Text="Placa del Vehículo:" />
-                        <TextBox Width="300" Text="" />
+                        <TextBox Width="300" Text="{Binding Report.CarPlate}" />
                     </StackPanel>
 
                     <StackPanel Margin="0,5" Orientation="Vertical">
@@ -75,64 +75,44 @@
                             <TextBox
                                 Width="140"
                                 Margin="0,0,5,0"
-                                Text="" />
-                            <TextBox Width="140" Text="" />
+                                Text="{Binding Report.Longitude}" />
+                            <TextBox Width="140" Text="{Binding Report.Latitude}" />
                         </StackPanel>
                         <StackPanel Margin="5" />
                     </StackPanel>
                 </StackPanel>
 
-                <!--  Detalles específicos del EntryExitReport  -->
+                <!--  Detalles específicos del Issue Report  -->
                 <StackPanel
                     Grid.Row="1"
                     Margin="0,0,0,20"
                     Orientation="Vertical">
+
                     <StackPanel Margin="0,5" Orientation="Horizontal">
                         <TextBlock
                             Width="150"
                             FontWeight="Bold"
-                            Text="Odométro:" />
-                        <TextBox Width="300" Text="" />
+                            Text="Tipo:" />
+                        <TextBox Width="300" Text="{Binding Report.Type}" />
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal">
                         <TextBlock
                             Width="150"
                             FontWeight="Bold"
-                            Text="Nivel de Combustible:" />
-                        <ProgressBar Width="300" />
+                            Text="Prioridad:" />
+                        <TextBox Width="300" Text="{Binding Report.Priority}" />
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal">
                         <TextBlock
                             Width="150"
                             FontWeight="Bold"
-                            Text="Notas:" />
+                            Text="Detalles:" />
                         <TextBox
                             Width="300"
                             Height="40"
                             AcceptsReturn="True"
-                            Text=""
+                            Text="{Binding Report.Details}"
                             TextWrapping="Wrap" />
-                    </StackPanel>
-                    <StackPanel Margin="0,5" Orientation="Horizontal">
-                        <TextBlock
-                            Width="150"
-                            FontWeight="Bold"
-                            Text="Estado de las Llantas:" />
-                        <TextBox Width="300" Text="" />
-                    </StackPanel>
-                    <StackPanel Margin="0,5" Orientation="Horizontal">
-                        <TextBlock
-                            Width="150"
-                            FontWeight="Bold"
-                            Text="Estado de la Pintura:" />
-                        <TextBox Width="300" Text="" />
-                    </StackPanel>
-                    <StackPanel Margin="0,5" Orientation="Horizontal">
-                        <TextBlock
-                            Width="150"
-                            FontWeight="Bold"
-                            Text="Estado Mecánico:" />
-                        <TextBox Width="300" Text="" />
                     </StackPanel>
                 </StackPanel>
 
@@ -147,16 +127,17 @@
                             ItemHeight="auto"
                             ItemWidth="auto">
                             <!--  Repite un control Image por cada foto  -->
-                            <ItemsControl>
+                            <ItemsControl ItemsSource="{Binding Photos}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Image
                                             Width="auto"
                                             Height="800"
+                                            Source="{Binding FilePath}"
                                             Cursor="Hand"
                                             Stretch="UniformToFill">
                                             <Image.ToolTip>
-                                                <TextBlock Text="" />
+                                                <TextBlock Text="{Binding FileName}" />
                                             </Image.ToolTip>
                                         </Image>
                                     </DataTemplate>

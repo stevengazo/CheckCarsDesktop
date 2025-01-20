@@ -21,7 +21,6 @@ namespace CheckCarsDesktop.ViewModels
             Report = SharedData.CrashReport;
             LoadImgs();
             LoadUbication();
-
         }
         #region Properties
         private readonly APIService _APIService = new();
