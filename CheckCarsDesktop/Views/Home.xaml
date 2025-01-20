@@ -166,6 +166,17 @@
                                     Width="200"
                                     DisplayMemberBinding="{Binding Author}"
                                     Header="Autor" />
+                                <!--  Columna para el botón  -->
+                                <GridViewColumn Width="100" Header="Acción">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button
+                                                Command="{Binding DataContext.ISeeIssueReport, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                CommandParameter="{Binding ReportId}"
+                                                Content="Ver Reporte" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -230,7 +241,19 @@
                                     Width="200"
                                     DisplayMemberBinding="{Binding Author}"
                                     Header="Autor" />
+                                <!--  Columna para el botón  -->
+                                <GridViewColumn Width="100" Header="Acción">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button
+                                                Command="{Binding DataContext.ISeeCrashReport, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                CommandParameter="{Binding ReportId}"
+                                                Content="Ver Reporte" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
+
                         </ListView.View>
                     </ListView>
                 </Grid>

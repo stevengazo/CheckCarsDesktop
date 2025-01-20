@@ -11,5 +11,7 @@ namespace CheckCarsDesktop.Shared.Data
     {
         public static string Token="";
         public static EntryExitReport EntryExitReport = new EntryExitReport();
+        public static IssueReport IssueReport = new IssueReport();
+        public static CrashReport CrashReport = new CrashReport();
     }
 }

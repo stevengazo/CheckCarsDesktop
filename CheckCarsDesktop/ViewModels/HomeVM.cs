@@ -24,12 +24,15 @@ namespace CheckCarsDesktop.ViewModels
             Task.Run(() => LoadDefaultIssues());
             Task.Run(() => LoadDefaultCrashes());
             ISeeEntryReport = new RelayCommand<string>(e => SeeEntry(e));
+            ISeeCrashReport = new RelayCommand<string>(e => SeeCrash(e));
+            ISeeIssueReport = new RelayCommand<string>(e => Seeissue(e));
         }
 
         #region Commands
 
         public RelayCommand<string> ISeeEntryReport {  get; set; }
-
+        public RelayCommand<string> ISeeIssueReport { get; set; }
+        public RelayCommand<string> ISeeCrashReport { get; set; }
         #endregion
 
         #region Properties
@@ -138,15 +141,26 @@ namespace CheckCarsDesktop.ViewModels
                 //    throw;
             }
         }
-
         private async void SeeEntry(string id)
         {
             SharedData.EntryExitReport = Entries.FirstOrDefault(e => e.ReportId == id);
             ViewEntry viewEntry = new ViewEntry();
             viewEntry.Show();
         }
+        private async void Seeissue(string id)
+        {
+            SharedData.IssueReport = Issues.FirstOrDefault(e => e.ReportId == id);
+            ViewIssue viewIssue = new ViewIssue();
+            viewIssue.Show();
+        }
+        private async void SeeCrash(string id)
+        {
+            SharedData.CrashReport = Crashes.FirstOrDefault(e => e.ReportId == id);
+            ViewCrash viewCrash = new ViewCrash();
+            viewCrash.Show();
+        }
 
-        
+
         #endregion
 
 

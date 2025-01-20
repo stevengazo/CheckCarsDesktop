@@ -6,13 +6,167 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CheckCarsDesktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    WindowStartupLocation="CenterScreen"
     Title="Información de Problema"
     Width="800"
     Height="450"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid />
     <Window.DataContext>
-        <ViewModels:ViewIssueVM/>
+        <ViewModels:ViewIssueVM />
     </Window.DataContext>
+
+    <Grid>
+
+        <!--  Título del reporte  -->
+        <TextBlock
+            Margin="025,0,25,25"
+            HorizontalAlignment="Center"
+            FontSize="20"
+            FontWeight="Bold"
+            Text="Detalles del Reporte de Choque" />
+        <ScrollViewer Margin="0,30,0,0">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  Información básica del reporte  -->
+                <StackPanel
+                    Grid.Row="0"
+                    Margin="0,0,0,20"
+                    Orientation="Vertical">
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="ID del Reporte:" />
+                        <TextBox Width="300" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Autor:" />
+                        <TextBox Width="300" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Fecha de Creación:" />
+                        <TextBox Width="300" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Placa del Vehículo:" />
+                        <TextBox Width="300" Text="" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,5" Orientation="Vertical">
+                        <StackPanel Margin="0,5" Orientation="Horizontal">
+                            <TextBlock
+                                Width="150"
+                                FontWeight="Bold"
+                                Text="Coordenadas:" />
+                            <TextBox
+                                Width="140"
+                                Margin="0,0,5,0"
+                                Text="" />
+                            <TextBox Width="140" Text="" />
+                        </StackPanel>
+                        <StackPanel Margin="5" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!--  Detalles específicos del EntryExitReport  -->
+                <StackPanel
+                    Grid.Row="1"
+                    Margin="0,0,0,20"
+                    Orientation="Vertical">
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Odométro:" />
+                        <TextBox Width="300" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Nivel de Combustible:" />
+                        <ProgressBar Width="300" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Notas:" />
+                        <TextBox
+                            Width="300"
+                            Height="40"
+                            AcceptsReturn="True"
+                            Text=""
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Estado de las Llantas:" />
+                        <TextBox Width="300" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Estado de la Pintura:" />
+                        <TextBox Width="300" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            FontWeight="Bold"
+                            Text="Estado Mecánico:" />
+                        <TextBox Width="300" Text="" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!--  Imágenes relacionadas con el reporte  -->
+                <GroupBox
+                    Grid.Row="2"
+                    Margin="0,20,0,0"
+                    Header="Imágenes del Reporte">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel
+                            Margin="10"
+                            ItemHeight="auto"
+                            ItemWidth="auto">
+                            <!--  Repite un control Image por cada foto  -->
+                            <ItemsControl>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image
+                                            Width="auto"
+                                            Height="800"
+                                            Cursor="Hand"
+                                            Stretch="UniformToFill">
+                                            <Image.ToolTip>
+                                                <TextBlock Text="" />
+                                            </Image.ToolTip>
+                                        </Image>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </ScrollViewer>
+                </GroupBox>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+
 </Window>
