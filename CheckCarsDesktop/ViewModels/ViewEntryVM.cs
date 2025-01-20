@@ -1,6 +1,8 @@
 ﻿using CheckCarsDesktop.Models;
 using CheckCarsDesktop.Services;
 using CheckCarsDesktop.Shared.Data;
+using GMap.NET;
+using GMap.NET.MapProviders;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +16,11 @@ namespace CheckCarsDesktop.ViewModels
     {
         private readonly APIService _APIService = new();
         private ObservableCollection<Photo> photos = new();
+
+        private PointLatLng _ubication {  get; set; }
         private EntryExitReport _report { get; set; }
+
+        public OpenStreetMapProvider MapProvider { get; set; } = OpenStreetMapProvider.Instance;
 
         public ObservableCollection<Photo> Photos
         {
@@ -40,13 +46,34 @@ namespace CheckCarsDesktop.ViewModels
                 }
             }
         }
+        public  PointLatLng Ubication
+        {
+            get { return _ubication; }
+            set
+            {
+                if (_ubication != value) // Verifica si el valor ha cambiado
+                {
+                    _ubication = value;
+                    OnPropertyChanged(nameof(Ubication));
+                }
+            }
+        }
 
         public ViewEntryVM()
         {
             _APIService.Token = SharedData.Token;
             Report = SharedData.EntryExitReport;
             LoadImgs();
+            LoadUbication();
         }
+        private void LoadUbication()
+        {
+            if(Report!=null)
+            {
+                Ubication = new PointLatLng(Report.Latitude, Report.Longitude);
+            }
+        }
+
 
         private async void LoadImgs()
         {

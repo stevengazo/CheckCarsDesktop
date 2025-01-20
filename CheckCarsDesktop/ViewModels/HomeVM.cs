@@ -142,11 +142,8 @@ namespace CheckCarsDesktop.ViewModels
         private async void SeeEntry(string id)
         {
             SharedData.EntryExitReport = Entries.FirstOrDefault(e => e.ReportId == id);
-
-
-
             ViewEntry viewEntry = new ViewEntry();
-            viewEntry.ShowDialog();
+            viewEntry.Show();
         }
 
         

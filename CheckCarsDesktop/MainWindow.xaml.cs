@@ -1,4 +1,6 @@
 ﻿using CheckCarsDesktop.ViewModels;
+using GMap.NET.WindowsPresentation;
+using GMap.NET;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +31,8 @@ namespace CheckCarsDesktop
             {
                 viewModel.CloseWindowAction = Close; // Asigna la acción de cierre
             }
+
+   
         }
     }
 }

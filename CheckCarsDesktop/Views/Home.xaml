@@ -7,9 +7,9 @@
     xmlns:local="clr-namespace:CheckCarsDesktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Home"
-    WindowStartupLocation="CenterScreen"
     Width="800"
     Height="600"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
         <ViewModels:HomeVM />
@@ -85,10 +85,13 @@
                                     Width="90"
                                     DisplayMemberBinding="{Binding CarPlate}"
                                     Header="Placa" />
-                                <GridViewColumn
-                                    Width="90"
-                                    DisplayMemberBinding="{Binding mileage}"
-                                    Header="Odometro" />
+                                <GridViewColumn Width="90" Header="Odómetro">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding mileage, StringFormat='{}{0:N0} km'}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn
                                     Width="200"
                                     DisplayMemberBinding="{Binding Notes}"
