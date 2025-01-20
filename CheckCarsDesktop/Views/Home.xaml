@@ -101,9 +101,13 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button
+                                                Padding="2"
+                                                Background="Blue"
+                                                BorderBrush="Blue"
                                                 Command="{Binding DataContext.ISeeEntryReport, RelativeSource={RelativeSource AncestorType=ListView}}"
                                                 CommandParameter="{Binding ReportId}"
-                                                Content="Ver Reporte" />
+                                                Content="Ver Reporte"
+                                                Foreground="White" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -159,21 +163,33 @@
                                     DisplayMemberBinding="{Binding Created}"
                                     Header="Fecha" />
                                 <GridViewColumn
-                                    Width="150"
+                                    Width="90"
                                     DisplayMemberBinding="{Binding CarPlate}"
                                     Header="Placa" />
                                 <GridViewColumn
-                                    Width="200"
+                                    Width="110"
                                     DisplayMemberBinding="{Binding Author}"
                                     Header="Autor" />
+                                <GridViewColumn
+                                    Width="120"
+                                    DisplayMemberBinding="{Binding Type}"
+                                    Header="Tipo" />
+                                <GridViewColumn
+                                    Width="120"
+                                    DisplayMemberBinding="{Binding Priority}"
+                                    Header="Prioridad" />
                                 <!--  Columna para el botón  -->
                                 <GridViewColumn Width="100" Header="Acción">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button
+                                                Padding="2"
+                                                Background="Blue"
+                                                BorderBrush="Blue"
                                                 Command="{Binding DataContext.ISeeIssueReport, RelativeSource={RelativeSource AncestorType=ListView}}"
                                                 CommandParameter="{Binding ReportId}"
-                                                Content="Ver Reporte" />
+                                                Content="Ver Reporte"
+                                                Foreground="White" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -238,7 +254,7 @@
                                     DisplayMemberBinding="{Binding CarPlate}"
                                     Header="Placa" />
                                 <GridViewColumn
-                                    Width="200"
+                                    Width="120"
                                     DisplayMemberBinding="{Binding Author}"
                                     Header="Autor" />
                                 <!--  Columna para el botón  -->
@@ -246,9 +262,13 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button
+                                                Padding="2"
+                                                Background="Blue"
+                                                BorderBrush="Blue"
                                                 Command="{Binding DataContext.ISeeCrashReport, RelativeSource={RelativeSource AncestorType=ListView}}"
                                                 CommandParameter="{Binding ReportId}"
-                                                Content="Ver Reporte" />
+                                                Content="Ver Reporte"
+                                                Foreground="White" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

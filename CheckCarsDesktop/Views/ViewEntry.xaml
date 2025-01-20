@@ -91,6 +91,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 CanDragMap="False"
+                                MouseWheelZoomEnabled="False"
                                 MapProvider="{Binding MapProvider}"
                                 MaxZoom="20"
                                 MinZoom="00"
