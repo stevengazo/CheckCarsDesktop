@@ -4,11 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ViewModels="clr-namespace:CheckCarsDesktop.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
     xmlns:local="clr-namespace:CheckCarsDesktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Información del Choque"
     Width="550"
-    Height="450"
+    Height="550"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
@@ -78,6 +79,21 @@
                         </StackPanel>
                         <StackPanel Margin="5" />
                     </StackPanel>
+                    <StackPanel Margin="5">
+                        <gmap:GMapControl
+                            Name="mapControl"
+                            Width="auto"
+                            Height="200"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            CanDragMap="False"
+                            MapProvider="{Binding MapProvider}"
+                            MaxZoom="20"
+                            MinZoom="00"
+                            Position="{Binding Ubication}"
+                            Zoom="15" />
+                    </StackPanel>
+
                 </StackPanel>
 
                 <StackPanel
