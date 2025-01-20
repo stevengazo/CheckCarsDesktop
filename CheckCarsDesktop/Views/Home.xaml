@@ -25,7 +25,7 @@
         <!--  Menú superior  -->
         <Menu Grid.Row="0">
             <MenuItem Header="Archivo" />
-            <MenuItem Header="Vehículos" />
+            <MenuItem Command="{Binding ISeeCarsReport}" Header="Vehículos" />
             <MenuItem Header="Usuarios" />
             <MenuItem Header="Configuración" />
         </Menu>

@@ -20,6 +20,7 @@ namespace CheckCarsDesktop.ViewModels
         private PointLatLng _ubication {  get; set; }
         private EntryExitReport _report { get; set; }
 
+
         public OpenStreetMapProvider MapProvider { get; set; } = OpenStreetMapProvider.Instance;
 
         public ObservableCollection<Photo> Photos

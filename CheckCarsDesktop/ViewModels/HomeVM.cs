@@ -26,10 +26,13 @@ namespace CheckCarsDesktop.ViewModels
             ISeeEntryReport = new RelayCommand<string>(e => SeeEntry(e));
             ISeeCrashReport = new RelayCommand<string>(e => SeeCrash(e));
             ISeeIssueReport = new RelayCommand<string>(e => Seeissue(e));
+            ISeeCarsReport = new RelayCommand(() => CarsList());
         }
 
-        #region Commands
 
+
+        #region Commands
+        public RelayCommand ISeeCarsReport { get; set; }
         public RelayCommand<string> ISeeEntryReport {  get; set; }
         public RelayCommand<string> ISeeIssueReport { get; set; }
         public RelayCommand<string> ISeeCrashReport { get; set; }
@@ -98,6 +101,11 @@ namespace CheckCarsDesktop.ViewModels
 
 
         #region Methods
+        private void CarsList()
+        {
+            CarList carList = new CarList();
+            carList.ShowDialog();
+        }
         private async void LoadDefaultEntries()
         {
             try

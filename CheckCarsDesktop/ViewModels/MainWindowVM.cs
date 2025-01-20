@@ -13,6 +13,7 @@ using System.Windows.Input;
 using CheckCarsDesktop.Shared.Data;
 using CheckCarsDesktop.Models;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows;
 
 namespace CheckCarsDesktop.ViewModels
 {
@@ -43,6 +44,7 @@ namespace CheckCarsDesktop.ViewModels
         private string _email;
         private string _password;
         private bool _Remember;
+        private Visibility _Signing = Visibility.Hidden;
         public string Email
         {
             get { return _email; }
@@ -80,6 +82,19 @@ namespace CheckCarsDesktop.ViewModels
             }
         }
 
+        public Visibility Signing
+        {
+            get { return _Signing; }
+            set
+            {
+                if (_Signing != value) // Verifica si el valor ha cambiado
+                {
+                    _Signing = value;
+                    OnPropertyChanged(nameof(Signing));
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -113,6 +128,7 @@ namespace CheckCarsDesktop.ViewModels
         {
             try
             {
+                Signing = Visibility.Visible;
                 var request = new
                 {
                     email = Email,
@@ -151,6 +167,10 @@ namespace CheckCarsDesktop.ViewModels
             {
 
                 throw;
+            }
+            finally
+            {
+                Signing = Visibility.Hidden;    
             }
 
         }

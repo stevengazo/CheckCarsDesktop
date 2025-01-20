@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CheckCarsDesktop"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mp="http://schemas.mpcoding.com/mpcoding/wpf/loadinganimation"
     Title="Login CheckCars"
     Width="350"
     Height="400"
@@ -96,13 +97,18 @@
             <Label VerticalAlignment="Center" Content="Recordar" />
             <CheckBox VerticalAlignment="Center" IsChecked="{Binding Remember}" />
         </StackPanel>
-
-        <Button
+        <StackPanel
             Grid.Row="5"
-            Margin="10,10,10,10"
-            Command="{Binding LoginCommand}"
-            Content="Ingresar"
-            Style="{StaticResource ButtonStyle}" />
+            Margin="10,0,10,0"
+            Orientation="Vertical">
+            <mp:DonutSpinner  Visibility="{Binding Signing}" Width="30" Height="30" SpinnerColor="LightGreen" Duration="0:0:1.0"/>
+            <Button
+                Command="{Binding LoginCommand}"
+                Content="Ingresar"
+                Style="{StaticResource ButtonStyle}" />
+           
+        </StackPanel>
+
         <Button
             Grid.Row="6"
             Margin="10,10,10,4"
@@ -110,6 +116,7 @@
             Command="{Binding ResetPasswordCommand}"
             Content="Cambiar Contraseña"
             Style="{StaticResource ButtonStyle}" />
+
 
     </Grid>
 </Window>
