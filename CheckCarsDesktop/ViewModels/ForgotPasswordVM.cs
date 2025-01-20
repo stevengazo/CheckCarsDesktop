@@ -1,5 +1,5 @@
 ﻿using CheckCarsDesktop.Services;
-using CheckCarsDesktop.Shared.Commands;
+using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,8 +16,8 @@ namespace CheckCarsDesktop.ViewModels
     {
         private readonly APIService apIService = new APIService();
 
-        public ICommand ResetPassword { get; set; }
-        public ICommand CloseWindowCommand { get; set; }
+        public RelayCommand ResetPassword { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
 
 
         private string _token;
@@ -66,11 +66,23 @@ namespace CheckCarsDesktop.ViewModels
 
         public ForgotPasswordVM()
         {
-            ResetPassword = new RelayCommand(ChangePasswordAsync);
-            CloseWindowCommand = new RelayCommand(CloseWindow);
+            ResetPassword = new RelayCommand(async () => await ChangePasswordAsync());
+
+            CloseWindowCommand = new RelayCommand<Window>(async (e)=>  await CloseWindow(e));
+        }
+        private async Task CloseWindow(object obj)
+        {
+            // Aquí puedes comunicarte con la vista para cerrar la ventana
+            // Dependiendo de cómo esté implementado el patrón MVVM en tu aplicación, esto puede variar.
+            // A continuación, se muestra un ejemplo con un evento de la vista:
+
+            if (obj is Window window)
+            {
+                window.Close();
+            }
         }
 
-        private async void ChangePasswordAsync(object? obj)
+        private async Task ChangePasswordAsync()
         {
             // Verifica si la contraseña y la confirmación coinciden
             if (Password == ConfirmPassword)
@@ -106,17 +118,7 @@ namespace CheckCarsDesktop.ViewModels
             }
         }
 
-        private void CloseWindow(object obj)
-        {
-            // Aquí puedes comunicarte con la vista para cerrar la ventana
-            // Dependiendo de cómo esté implementado el patrón MVVM en tu aplicación, esto puede variar.
-            // A continuación, se muestra un ejemplo con un evento de la vista:
-
-            if (obj is Window window)
-            {
-                window.Close();
-            }
-        }
+    
     }
 }
 

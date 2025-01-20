@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using CheckCarsDesktop.Shared.Data;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CheckCarsDesktop.ViewModels
 {
@@ -19,8 +22,14 @@ namespace CheckCarsDesktop.ViewModels
             Task.Run(() => LoadDefaultEntries());
             Task.Run(() => LoadDefaultIssues());
             Task.Run(() => LoadDefaultCrashes());
+            ISeeEntryReport = new RelayCommand<string>(e => SeeEntry(e));
         }
 
+        #region Commands
+
+        public RelayCommand<string> ISeeEntryReport {  get; set; }
+
+        #endregion
 
         #region Properties
         private readonly APIService _APIService = new();
@@ -129,7 +138,12 @@ namespace CheckCarsDesktop.ViewModels
             }
         }
 
+        private async void SeeEntry(string id)
+        {
 
+        }
+
+        
         #endregion
 
 

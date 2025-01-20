@@ -73,6 +73,16 @@
                                 <GridViewColumn Width="130" Header="Autor" DisplayMemberBinding="{Binding Author}" />
                                 <GridViewColumn Width="100" Header="Placa" DisplayMemberBinding="{Binding CarPlate}" />
                                 <GridViewColumn Width="200" Header="Motivo de Uso" DisplayMemberBinding="{Binding Notes}" />
+                                <!-- Columna para el botón -->
+                                <GridViewColumn Width="100" Header="Acción">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Ver Reporte"
+                                Command="{Binding DataContext.ISeeEntryReport, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                CommandParameter="{Binding CarPlate}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>

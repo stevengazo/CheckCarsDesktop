@@ -1,5 +1,4 @@
 ﻿using CheckCarsDesktop.Services;
-using CheckCarsDesktop.Shared.Commands;
 using CheckCarsDesktop.Views;
 using CheckCarsDesktop.Views.Shared;
 using Microsoft.Win32;
@@ -13,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CheckCarsDesktop.Shared.Data;
 using CheckCarsDesktop.Models;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CheckCarsDesktop.ViewModels
 {
@@ -32,7 +32,7 @@ namespace CheckCarsDesktop.ViewModels
         #endregion
        
         #region Commands
-        public ICommand LoginCommand { get; }
+        public RelayCommand LoginCommand { get; }
         public ICommand CloseCommand { get; }
         public ICommand ResetPasswordCommand { get; }
         #endregion
@@ -83,7 +83,7 @@ namespace CheckCarsDesktop.ViewModels
         #endregion
 
         #region Methods
-        private void LoadDefault()
+        private async void LoadDefault()
         {
             var user = _storage.LoadCredentials();
             if (user != null)
@@ -95,8 +95,7 @@ namespace CheckCarsDesktop.ViewModels
 
             }
         }
-
-        private async void ResetPassword(object? obj)
+        private async void ResetPassword()
         {
             var inputDialog = new InputDialog("Recuperación de Contraseña", "Ingresa tu correo electrónico:");
             bool? result = inputDialog.ShowDialog();
@@ -110,7 +109,7 @@ namespace CheckCarsDesktop.ViewModels
                 forgotPassword.ShowDialog();
             }
         }
-        private async void LoginAsync(object? obj)
+        private  async void LoginAsync()
         {
             try
             {
@@ -119,7 +118,7 @@ namespace CheckCarsDesktop.ViewModels
                     email = Email,
                     password = Password
                 };
-                var response = await aPIService.PostAsync("/api/Account/login", request, TimeSpan.FromSeconds(4));
+                var response =await  aPIService.PostAsync("/api/Account/login", request, TimeSpan.FromSeconds(4));
                 if (response != null)
                 {
                     var token = JsonConvert.DeserializeObject<ResponseToken>(response);
@@ -155,7 +154,7 @@ namespace CheckCarsDesktop.ViewModels
             }
 
         }
-        private void ExecuteCloseCommand(object parameter)
+        private void ExecuteCloseCommand()
         {
             CloseWindowAction?.Invoke();
         }
