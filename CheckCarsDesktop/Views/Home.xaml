@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:CheckCarsDesktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Home"
+    WindowStartupLocation="CenterScreen"
     Width="800"
     Height="600"
     mc:Ignorable="d">
@@ -66,20 +67,40 @@
                     </StackPanel>
 
                     <!--  Registros  -->
-                    <ListView Grid.Row="1" Margin="10" ItemsSource="{Binding Entries, Mode=TwoWay}">
+                    <ListView
+                        Grid.Row="1"
+                        Margin="10"
+                        ItemsSource="{Binding Entries, Mode=TwoWay}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="150" Header="Fecha" DisplayMemberBinding="{Binding Created}"  />
-                                <GridViewColumn Width="130" Header="Autor" DisplayMemberBinding="{Binding Author}" />
-                                <GridViewColumn Width="100" Header="Placa" DisplayMemberBinding="{Binding CarPlate}" />
-                                <GridViewColumn Width="200" Header="Motivo de Uso" DisplayMemberBinding="{Binding Notes}" />
-                                <!-- Columna para el botón -->
+                                <GridViewColumn
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Created}"
+                                    Header="Fecha" />
+                                <GridViewColumn
+                                    Width="130"
+                                    DisplayMemberBinding="{Binding Author}"
+                                    Header="Autor" />
+                                <GridViewColumn
+                                    Width="90"
+                                    DisplayMemberBinding="{Binding CarPlate}"
+                                    Header="Placa" />
+                                <GridViewColumn
+                                    Width="90"
+                                    DisplayMemberBinding="{Binding mileage}"
+                                    Header="Odometro" />
+                                <GridViewColumn
+                                    Width="200"
+                                    DisplayMemberBinding="{Binding Notes}"
+                                    Header="Motivo de Uso" />
+                                <!--  Columna para el botón  -->
                                 <GridViewColumn Width="100" Header="Acción">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Content="Ver Reporte"
-                                Command="{Binding DataContext.ISeeEntryReport, RelativeSource={RelativeSource AncestorType=ListView}}"
-                                CommandParameter="{Binding CarPlate}" />
+                                            <Button
+                                                Command="{Binding DataContext.ISeeEntryReport, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                CommandParameter="{Binding ReportId}"
+                                                Content="Ver Reporte" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -124,12 +145,24 @@
                     </StackPanel>
 
                     <!--  Registros  -->
-                    <ListView Grid.Row="1" Margin="10" ItemsSource="{Binding Issues}">
+                    <ListView
+                        Grid.Row="1"
+                        Margin="10"
+                        ItemsSource="{Binding Issues}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="150" Header="Fecha" DisplayMemberBinding="{Binding Created}" />
-                                <GridViewColumn Width="150" Header="Placa" DisplayMemberBinding="{Binding CarPlate}" />
-                                <GridViewColumn Width="200" Header="Autor" DisplayMemberBinding="{Binding Author}" />
+                                <GridViewColumn
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Created}"
+                                    Header="Fecha" />
+                                <GridViewColumn
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding CarPlate}"
+                                    Header="Placa" />
+                                <GridViewColumn
+                                    Width="200"
+                                    DisplayMemberBinding="{Binding Author}"
+                                    Header="Autor" />
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -178,13 +211,22 @@
                     <ListView
                         Grid.Row="1"
                         Grid.ColumnSpan="2"
-                        ItemsSource="{Binding Crashes, Mode=TwoWay}"
-                        Margin="10,10,10,10">
+                        Margin="10,10,10,10"
+                        ItemsSource="{Binding Crashes, Mode=TwoWay}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="150" Header="Fecha" DisplayMemberBinding="{Binding Created}" />
-                                <GridViewColumn Width="150" Header="Placa" DisplayMemberBinding="{Binding CarPlate}" />
-                                <GridViewColumn Width="200" Header="Autor" DisplayMemberBinding="{Binding Author}" />
+                                <GridViewColumn
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Created}"
+                                    Header="Fecha" />
+                                <GridViewColumn
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding CarPlate}"
+                                    Header="Placa" />
+                                <GridViewColumn
+                                    Width="200"
+                                    DisplayMemberBinding="{Binding Author}"
+                                    Header="Autor" />
                             </GridView>
                         </ListView.View>
                     </ListView>

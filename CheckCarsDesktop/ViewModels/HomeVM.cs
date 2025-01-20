@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.Input;
+using CheckCarsDesktop.Views;
 
 namespace CheckCarsDesktop.ViewModels
 {
@@ -140,7 +141,12 @@ namespace CheckCarsDesktop.ViewModels
 
         private async void SeeEntry(string id)
         {
+            SharedData.EntryExitReport = Entries.FirstOrDefault(e => e.ReportId == id);
 
+
+
+            ViewEntry viewEntry = new ViewEntry();
+            viewEntry.ShowDialog();
         }
 
         
