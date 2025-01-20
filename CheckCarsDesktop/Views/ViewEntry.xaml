@@ -7,10 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CheckCarsDesktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    WindowStartupLocation="CenterScreen"
     Title="Detalles del Reporte de Entrada/Salida"
     Width="600"
     Height="700"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
         <ViewModels:ViewEntryVM />
@@ -19,12 +19,12 @@
 
         <!--  Título del reporte  -->
         <TextBlock
-            Margin="0,0,0,20"
+            Margin="025,0,25,25"
             HorizontalAlignment="Center"
             FontSize="20"
             FontWeight="Bold"
             Text="Detalles del Reporte de Entrada/Salida" />
-        <ScrollViewer Margin="0,20,0,0">
+        <ScrollViewer Margin="0,30,0,0">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -97,7 +97,7 @@
                             Width="150"
                             FontWeight="Bold"
                             Text="Nivel de Combustible:" />
-                        <ProgressBar Width="300"  Value="{Binding Report.FuelLevel}" />
+                        <ProgressBar Width="300" Value="{Binding Report.FuelLevel}" />
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal">
                         <TextBlock
@@ -108,9 +108,8 @@
                             Width="300"
                             Height="40"
                             AcceptsReturn="True"
-                            TextWrapping="Wrap"
                             Text="{Binding Report.Notes}"
-                            />
+                            TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal">
                         <TextBlock
@@ -140,21 +139,30 @@
                     Grid.Row="2"
                     Margin="0,20,0,0"
                     Header="Imágenes del Reporte">
-                    <StackPanel>
-                        <ListView Height="200" Margin="10">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Width="200" Header="Nombre de Archivo" />
-                                    <GridViewColumn Width="400" Header="Ruta" />
-                                    <GridViewColumn Width="150" Header="Fecha Tomada" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                        <Button
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel
                             Margin="10"
-                            HorizontalAlignment="Right"
-                            Content="Abrir Imagen Seleccionada" />
-                    </StackPanel>
+                            ItemHeight="auto"
+                            ItemWidth="auto">
+                            <!--  Repite un control Image por cada foto  -->
+                            <ItemsControl ItemsSource="{Binding Photos, Mode=TwoWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image
+                                            Width="auto"
+                                            Height="800"
+                                            Cursor="Hand"
+                                            Source="{Binding FilePath}"
+                                            Stretch="UniformToFill">
+                                            <Image.ToolTip>
+                                                <TextBlock Text="{Binding FileName}" />
+                                            </Image.ToolTip>
+                                        </Image>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </ScrollViewer>
                 </GroupBox>
             </Grid>
         </ScrollViewer>

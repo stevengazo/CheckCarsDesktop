@@ -130,7 +130,7 @@ namespace CheckCarsDesktop.ViewModels
                         UserCredentials userCredentials = new UserCredentials();
                         userCredentials.Username = Email;
                         userCredentials.AuthToken= token.Token; 
-                        userCredentials.SaveUserName= Remember;
+                     //   userCredentials.SaveUserName= Remember;
                         userCredentials.pass = Password;
                         _storage.SaveCredentials(userCredentials);
                     }
