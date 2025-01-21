@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,15 +15,28 @@ namespace CheckCarsDesktop.Services
         public string Token { get; set; }
         private readonly HttpClient _httpClient;
 
+
         public APIService(TimeSpan? timeout = null)
         {
-           _httpClient = new HttpClient
+            // Leer la configuración
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory()) // Ruta base de la aplicación
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            // Obtener la URL base desde el archivo de configuración
+            var baseUrl = configuration["APISettings:BaseURL"];
+            if (string.IsNullOrEmpty(baseUrl))
             {
-                BaseAddress = new Uri($"https://mecsacars.stevengazo.co.cr/"),
+                throw new InvalidOperationException("La URL base no está configurada correctamente.");
+            }
+
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(baseUrl),
                 Timeout = timeout ?? TimeSpan.FromSeconds(100) // Configuración predeterminada de tiempo de espera
             };
         }
-
         private void AddAuthorizationHeader()
         {
             if (!string.IsNullOrEmpty(Token))
@@ -84,8 +99,5 @@ namespace CheckCarsDesktop.Services
                 return null;
             }
         }
-
-
     }
-
 }
