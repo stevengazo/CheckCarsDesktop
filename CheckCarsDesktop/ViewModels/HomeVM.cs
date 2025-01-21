@@ -261,11 +261,16 @@ namespace CheckCarsDesktop.ViewModels
                     endpoint = $"{endpoint}?{string.Join("&", queryParameters)}";
                 }
 
-                // Llamada al servicio API
-                var data = await _APIService.GetAsync<IEnumerable<EntryExitReport>>(endpoint, TimeSpan.FromSeconds(10));
+                if (queryParameters.Count != 0)
+                {
 
-                Entries = new();
-                Entries.AddRange(data);
+                    // Llamada al servicio API
+                    var data = await _APIService.GetAsync<IEnumerable<EntryExitReport>>(endpoint, TimeSpan.FromSeconds(10));
+
+                    Entries = new();
+                    Entries.AddRange(data);
+                }
+
 
 
             }

@@ -74,17 +74,20 @@
             Content="Usuario"
             Style="{StaticResource LabelStyle}" />
         <TextBox
+            TextAlignment="Center"
             Grid.Row="1"
             Margin="10,10,10,10"
             Style="{StaticResource TextBoxStyle}"
             Text="{Binding Email}" />
 
         <Label
+            
             Grid.Row="2"
             Margin="5,10,5,5"
             Content="Contraseña"
             Style="{StaticResource LabelStyle}" />
         <TextBox
+TextAlignment="Center"
             Grid.Row="3"
             Margin="10,10,10,10"
             Style="{StaticResource TextBoxStyle}"

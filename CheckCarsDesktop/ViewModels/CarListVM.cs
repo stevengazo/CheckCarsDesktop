@@ -1,6 +1,7 @@
 ﻿using CheckCarsDesktop.Models;
 using CheckCarsDesktop.Services;
 using CheckCarsDesktop.Shared.Data;
+using CheckCarsDesktop.Views;
 using CommunityToolkit.Mvvm.Input;
 using Meziantou.Framework.WPF.Collections;
 using System;
@@ -15,6 +16,9 @@ namespace CheckCarsDesktop.ViewModels
     {
         public CarListVM()
         {
+            ISeeEntryReport = new RelayCommand<string>(e => SeeEntry(e));
+            ISeeCrashReport = new RelayCommand<string>(e => SeeCrash(e));
+            ISeeIssueReport = new RelayCommand<string>(e => Seeissue(e));
             SelectedCarCommand = new RelayCommand<Car>(async (car) => await LoadCar(car));
             _aPIService.Token = SharedData.Token;
             LoadCars();
@@ -95,7 +99,9 @@ namespace CheckCarsDesktop.ViewModels
 
         #endregion
         #region Commands
-
+        public RelayCommand<string> ISeeEntryReport { get; set; }
+        public RelayCommand<string> ISeeIssueReport { get; set; }
+        public RelayCommand<string> ISeeCrashReport { get; set; }
         public RelayCommand<Car> SelectedCarCommand { get; set; }
 
         #endregion
@@ -121,7 +127,6 @@ namespace CheckCarsDesktop.ViewModels
         {
         
         }
-
 
         private async Task Search(string plate)
         {
@@ -156,9 +161,10 @@ namespace CheckCarsDesktop.ViewModels
                 var data = await _aPIService.GetAsync<IEnumerable<EntryExitReport>>(endpoint, TimeSpan.FromSeconds(10));
 
                 Entries = new();
-                Entries.AddRange(data);
-
-
+                if( data !=null)
+                {
+                    Entries.AddRange(data);
+                }
             }
             catch (Exception ex)
             {
@@ -167,6 +173,7 @@ namespace CheckCarsDesktop.ViewModels
                 throw; // Se relanza la excepción para que el llamador pueda manejarla
             }
         }
+      
         private async Task SearchIssuesAsync(string Plate)
         {
             try
@@ -193,7 +200,11 @@ namespace CheckCarsDesktop.ViewModels
                 var data = await _aPIService.GetAsync<IEnumerable<IssueReport>>(endpoint, TimeSpan.FromSeconds(10));
 
                 Issues = new();
-                Issues.AddRange(data);
+                if ( data != null)
+                {
+                    Issues.AddRange(data);
+                }
+
 
 
             }
@@ -204,6 +215,7 @@ namespace CheckCarsDesktop.ViewModels
                 throw; // Se relanza la excepción para que el llamador pueda manejarla
             }
         }
+       
         private async Task SearchCrashesAsync(string Plate)
         {
             try
@@ -230,9 +242,10 @@ namespace CheckCarsDesktop.ViewModels
                 var data = await _aPIService.GetAsync<IEnumerable<CrashReport>>(endpoint, TimeSpan.FromSeconds(10));
 
                 Crashes = new();
-                Crashes.AddRange(data);
-
-
+                if ( data != null)
+                {
+                    Crashes.AddRange(data);
+                }
             }
             catch (Exception ex)
             {
@@ -240,6 +253,27 @@ namespace CheckCarsDesktop.ViewModels
                 Console.Error.WriteLine($"Error al buscar entradas: {ex.Message}");
                 throw; // Se relanza la excepción para que el llamador pueda manejarla
             }
+        }
+
+        private async void SeeEntry(string id)
+        {
+            SharedData.EntryExitReport = Entries.FirstOrDefault(e => e.ReportId == id);
+            ViewEntry viewEntry = new ViewEntry();
+            viewEntry.Show();
+        }
+      
+        private async void Seeissue(string id)
+        {
+            SharedData.IssueReport = Issues.FirstOrDefault(e => e.ReportId == id);
+            ViewIssue viewIssue = new ViewIssue();
+            viewIssue.Show();
+        }
+      
+        private async void SeeCrash(string id)
+        {
+            SharedData.CrashReport = Crashes.FirstOrDefault(e => e.ReportId == id);
+            ViewCrash viewCrash = new ViewCrash();
+            viewCrash.Show();
         }
 
         #endregion
