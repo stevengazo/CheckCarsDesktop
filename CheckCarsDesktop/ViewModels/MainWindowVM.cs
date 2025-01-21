@@ -101,13 +101,11 @@ namespace CheckCarsDesktop.ViewModels
         private async void LoadDefault()
         {
             var user = _storage.LoadCredentials();
-            if (user != null)
+            if (user != null && user.SaveUserName)
             {
-               // SharedData.Token = user.AuthToken;
                 Email = user.Username;
                 Password = user.pass;
                 Remember = user.SaveUserName;
-
             }
         }
         private async void ResetPassword()
@@ -145,8 +143,7 @@ namespace CheckCarsDesktop.ViewModels
                     {
                         UserCredentials userCredentials = new UserCredentials();
                         userCredentials.Username = Email;
-                        userCredentials.AuthToken= token.Token; 
-                     //   userCredentials.SaveUserName= Remember;
+                        userCredentials.SaveUserName= Remember;
                         userCredentials.pass = Password;
                         _storage.SaveCredentials(userCredentials);
                     }
