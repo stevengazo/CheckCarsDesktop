@@ -53,7 +53,10 @@ namespace CheckCarsDesktop.ViewModels
                 if (_SelectedCar != value) // Verifica si el valor ha cambiado
                 {
                     _SelectedCar = value;
-                    Search(_SelectedCar.Plate);
+                    if (_SelectedCar != null)
+                    {
+                        Search(_SelectedCar.Plate);
+                    }
                     OnPropertyChanged(nameof(SelectedCar));
                 }
             }
@@ -112,7 +115,9 @@ namespace CheckCarsDesktop.ViewModels
         private async Task AddCar()
         {
             AddCar addCar = new AddCar();
-            addCar.ShowDialog();  
+            addCar.ShowDialog();
+            SelectedCar = null;
+            LoadCars();
         }
         private async Task LoadCars()
         {
@@ -120,6 +125,7 @@ namespace CheckCarsDesktop.ViewModels
             {
                 var result = await _aPIService.GetAsync<List<Car>>("api/cars", TimeSpan.FromSeconds(4), useToken: true);
                 result = result.OrderBy(e=>e.Model).ToList();
+                Cars= new();
                 Cars.AddRange(result);
             }
         
@@ -137,9 +143,12 @@ namespace CheckCarsDesktop.ViewModels
 
         private async Task Search(string plate)
         {
-            SearchCrashesAsync(plate);
-            SearchEntriesAsync(plate);
-            SearchIssuesAsync(plate);
+            if(!string.IsNullOrEmpty(plate))
+            {
+                SearchCrashesAsync(plate);
+                SearchEntriesAsync(plate);
+                SearchIssuesAsync(plate);
+            }
         }
 
         private async void SearchEntriesAsync(string Plate)
