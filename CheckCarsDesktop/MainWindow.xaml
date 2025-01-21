@@ -74,24 +74,23 @@
             Content="Usuario"
             Style="{StaticResource LabelStyle}" />
         <TextBox
-            TextAlignment="Center"
             Grid.Row="1"
             Margin="10,10,10,10"
             Style="{StaticResource TextBoxStyle}"
-            Text="{Binding Email}" />
+            Text="{Binding Email}"
+            TextAlignment="Center" />
 
         <Label
-            
             Grid.Row="2"
             Margin="5,10,5,5"
             Content="Contraseña"
             Style="{StaticResource LabelStyle}" />
         <TextBox
-TextAlignment="Center"
             Grid.Row="3"
             Margin="10,10,10,10"
             Style="{StaticResource TextBoxStyle}"
-            Text="{Binding Password}" />
+            Text="{Binding Password}"
+            TextAlignment="Center" />
 
         <StackPanel
             Grid.Row="4"
@@ -104,12 +103,17 @@ TextAlignment="Center"
             Grid.Row="5"
             Margin="10,0,10,0"
             Orientation="Vertical">
-            <mp:DonutSpinner  Visibility="{Binding Signing}" Width="30" Height="30" SpinnerColor="LightGreen" Duration="0:0:1.0"/>
+            <mp:DonutSpinner
+                Width="30"
+                Height="30"
+                SpinnerColor="LightGreen"
+                Visibility="{Binding Signing}"
+                Duration="0:0:1.0" />
             <Button
                 Command="{Binding LoginCommand}"
                 Content="Ingresar"
                 Style="{StaticResource ButtonStyle}" />
-           
+
         </StackPanel>
 
         <Button

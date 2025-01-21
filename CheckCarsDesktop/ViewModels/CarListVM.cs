@@ -20,6 +20,7 @@ namespace CheckCarsDesktop.ViewModels
             ISeeCrashReport = new RelayCommand<string>(e => SeeCrash(e));
             ISeeIssueReport = new RelayCommand<string>(e => Seeissue(e));
             SelectedCarCommand = new RelayCommand<Car>(async (car) => await LoadCar(car));
+            AddCarCommand = new RelayCommand(async () => await AddCar());
             _aPIService.Token = SharedData.Token;
             LoadCars();
         }
@@ -103,10 +104,16 @@ namespace CheckCarsDesktop.ViewModels
         public RelayCommand<string> ISeeIssueReport { get; set; }
         public RelayCommand<string> ISeeCrashReport { get; set; }
         public RelayCommand<Car> SelectedCarCommand { get; set; }
+        public RelayCommand AddCarCommand { get; set; }
 
         #endregion
         #region Actions
 
+        private async Task AddCar()
+        {
+            AddCar addCar = new AddCar();
+            addCar.ShowDialog();  
+        }
         private async Task LoadCars()
         {
             try
