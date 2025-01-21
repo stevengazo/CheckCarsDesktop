@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CheckCarsDesktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Home"
+    Title="Registro Vehicular"
     Width="850"
     Height="600"
     WindowStartupLocation="CenterScreen"
@@ -25,10 +25,10 @@
 
         <!--  Menú superior  -->
         <Menu Grid.Row="0">
-            <MenuItem Header="Archivo" />
+            <MenuItem Header="Archivo" Visibility="Hidden" />
             <MenuItem Command="{Binding ISeeCarsReport}" Header="Vehículos" />
-            <MenuItem Header="Usuarios" />
-            <MenuItem Header="Configuración" />
+            <MenuItem Header="Usuarios" Visibility="Hidden" />
+            <MenuItem Header="Configuración" Visibility="Hidden" />
         </Menu>
 
         <!--  Filtros  -->

@@ -18,13 +18,13 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="2.5*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="AUTO" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
         <Menu
@@ -34,17 +34,17 @@
             <MenuItem
                 Padding="5,2,5,2"
                 Background="Green"
-                Foreground="White"
-                Header="Agregar" 
                 Command="{Binding AddCarCommand}"
-                />
+                Foreground="White"
+                Header="Agregar" />
         </Menu>
         <!--  Vehículos  -->
         <StackPanel
             Grid.Row="1"
-            Grid.RowSpan="2"
+            Grid.RowSpan="3"
             Grid.Column="0"
-            Width="auto">
+            Width="auto"
+            Height="auto">
             <Label FontSize="15" FontWeight="Bold">Vehículos</Label>
             <ListView
                 Name="MiListView"
@@ -119,13 +119,15 @@
                 <Button
                     Margin="5"
                     Background="Blue"
-                    Foreground="White">
+                    Foreground="White"
+                    Visibility="Hidden">
                     Actualizar
                 </Button>
                 <Button
                     Margin="5"
                     Background="red"
-                    Foreground="White">
+                    Foreground="White"
+                    Visibility="Hidden">
                     Eliminar
                 </Button>
             </StackPanel>

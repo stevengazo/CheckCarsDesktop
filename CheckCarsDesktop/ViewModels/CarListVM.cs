@@ -99,8 +99,6 @@ namespace CheckCarsDesktop.ViewModels
             }
         }
 
-
-
         #endregion
         #region Commands
         public RelayCommand<string> ISeeEntryReport { get; set; }
