@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.Input;
 using CheckCarsDesktop.Views;
+using Meziantou.Framework.WPF.Collections;
 
 namespace CheckCarsDesktop.ViewModels
 {
@@ -27,25 +28,30 @@ namespace CheckCarsDesktop.ViewModels
             ISeeCrashReport = new RelayCommand<string>(e => SeeCrash(e));
             ISeeIssueReport = new RelayCommand<string>(e => Seeissue(e));
             ISeeCarsReport = new RelayCommand(() => CarsList());
+            ISearch = new RelayCommand(() => SearchAsync());
         }
 
 
 
         #region Commands
         public RelayCommand ISeeCarsReport { get; set; }
-        public RelayCommand<string> ISeeEntryReport {  get; set; }
+        public RelayCommand<string> ISeeEntryReport { get; set; }
         public RelayCommand<string> ISeeIssueReport { get; set; }
         public RelayCommand<string> ISeeCrashReport { get; set; }
+        public RelayCommand ISearch { get; set; }
         #endregion
 
         #region Properties
         private readonly APIService _APIService = new();
 
-        private DateTime _DateToSearch;
-        
-        private List<EntryExitReport> _Entries = new();
-        private List<IssueReport> _Issues = new();
-        private List<CrashReport> _Crashes= new();
+        private DateTime _DateToSearch = DateTime.MinValue;
+        private string _plate;
+        private string _AutoToSearch;
+
+
+        private ConcurrentObservableCollection<EntryExitReport> _Entries = new();
+        private ConcurrentObservableCollection<IssueReport> _Issues = new();
+        private ConcurrentObservableCollection<CrashReport> _Crashes = new();
 
         public DateTime DateToSearch
         {
@@ -59,8 +65,32 @@ namespace CheckCarsDesktop.ViewModels
                 }
             }
         }
+        public string Plate
+        {
+            get { return _plate; }
+            set
+            {
+                if (_plate != value) // Verifica si el valor ha cambiado
+                {
+                    _plate = value;
+                    OnPropertyChanged(nameof(Plate));
+                }
+            }
+        }
+        public string AuthorToSearch
+        {
+            get { return _AutoToSearch; }
+            set
+            {
+                if (_AutoToSearch != value) // Verifica si el valor ha cambiado
+                {
+                    _AutoToSearch = value;
+                    OnPropertyChanged(nameof(_AutoToSearch));
+                }
+            }
+        }
 
-        public List<EntryExitReport> Entries
+        public ConcurrentObservableCollection<EntryExitReport> Entries
         {
             get { return _Entries; }
             set
@@ -72,7 +102,7 @@ namespace CheckCarsDesktop.ViewModels
                 }
             }
         }
-        public List<IssueReport> Issues
+        public ConcurrentObservableCollection<IssueReport> Issues
 
         {
             get { return _Issues; }
@@ -85,7 +115,7 @@ namespace CheckCarsDesktop.ViewModels
                 }
             }
         }
-        public List<CrashReport> Crashes
+        public ConcurrentObservableCollection<CrashReport> Crashes
         {
             get { return _Crashes; }
             set
@@ -112,7 +142,10 @@ namespace CheckCarsDesktop.ViewModels
             {
                 _APIService.Token = SharedData.Token;
                 var resu = await _APIService.GetAsync<List<EntryExitReport>>("api/EntryExitReports", TimeSpan.FromSeconds(20), true);
-                Entries = resu.ToList();
+                foreach (var item in resu)
+                {
+                    Entries.Add(item);
+                }
             }
             catch (Exception e)
             {
@@ -126,7 +159,10 @@ namespace CheckCarsDesktop.ViewModels
             {
                 _APIService.Token = SharedData.Token;
                 var resu = await _APIService.GetAsync<List<IssueReport>>("api/IssueReports", TimeSpan.FromSeconds(20), true);
-                Issues = resu.ToList();
+                foreach (var item in resu)
+                {
+                    Issues.Add(item);
+                }
             }
             catch (Exception e)
             {
@@ -141,7 +177,10 @@ namespace CheckCarsDesktop.ViewModels
 
                 _APIService.Token = SharedData.Token;
                 var resu = await _APIService.GetAsync<List<CrashReport>>("api/CrashReports", TimeSpan.FromSeconds(20), true);
-                Crashes = resu.ToList();
+                foreach (var item in resu)
+                {
+                    Crashes.Add(item);
+                }
             }
             catch (Exception e)
             {
@@ -167,7 +206,66 @@ namespace CheckCarsDesktop.ViewModels
             ViewCrash viewCrash = new ViewCrash();
             viewCrash.Show();
         }
+        private void SearchAsync()
+        {
+            SearchEntriesAsync();
+            //   SearchIssuesAsync();
+            // SearchCrashesAsync();
+            //    Task.WaitAll();
+        }
 
+        private async void SearchEntriesAsync()
+        {
+            try
+            {
+                // Construcción de los parámetros de consulta
+                var queryParameters = new List<string>();
+
+                if (DateToSearch != DateTime.MinValue)
+                {
+                    queryParameters.Add($"date={DateToSearch:yyyy-MM-dd}");
+                }
+
+                if (!string.IsNullOrEmpty(Plate))
+                {
+                    queryParameters.Add($"plate={Uri.EscapeDataString(Plate)}");
+                }
+
+                if (!string.IsNullOrEmpty(AuthorToSearch))
+                {
+                    queryParameters.Add($"author={Uri.EscapeDataString(AuthorToSearch)}");
+                }
+
+                // Construcción del endpoint con parámetros de consulta
+                var endpoint = "api/EntryExitReports/search";
+                if (queryParameters.Any())
+                {
+                    endpoint = $"{endpoint}?{string.Join("&", queryParameters)}";
+                }
+
+                // Llamada al servicio API
+                var data = await _APIService.GetAsync<IEnumerable<EntryExitReport>>(endpoint, TimeSpan.FromSeconds(10));
+
+                Entries = new();
+                Entries.AddRange(data);
+
+
+            }
+            catch (Exception ex)
+            {
+                // Manejo de la excepción
+                Console.Error.WriteLine($"Error al buscar entradas: {ex.Message}");
+                throw; // Se relanza la excepción para que el llamador pueda manejarla
+            }
+        }
+
+        private async Task SearchIssuesAsync()
+        {
+
+        }
+        private async Task SearchCrashesAsync()
+        {
+        }
 
         #endregion
 

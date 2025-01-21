@@ -19,6 +19,7 @@
         <!--  Definición de filas  -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -30,8 +31,45 @@
             <MenuItem Header="Configuración" />
         </Menu>
 
+        <!--  Filtros  -->
+        <StackPanel
+            Grid.Row="1"
+            Margin="10"
+            Orientation="Horizontal">
+            <TextBlock
+                Margin="0,0,5,0"
+                VerticalAlignment="Center"
+                Text="Fecha:" />
+            <DatePicker
+                Width="150"
+                Margin="0,0,15,0"
+                SelectedDate="{Binding DateToSearch, Mode=TwoWay}" />
+
+            <TextBlock
+                Margin="0,0,5,0"
+                VerticalAlignment="Center"
+                Text="Placa:" />
+            <TextBox
+                Width="150"
+                Margin="0,0,15,0"
+                Text="{Binding Plate, Mode=TwoWay}" />
+
+            <TextBlock
+                Margin="0,0,5,0"
+                VerticalAlignment="Center"
+                Text="Autor:" />
+            <TextBox
+                Width="150"
+                Margin="0,0,15,0"
+                Text="{Binding AuthorToSearch, Mode=OneWayToSource}" />
+
+            <Button Width="80" Margin="2" Content="Filtrar" Command="{Binding ISearch}" />
+            <Button Width="80" Margin="2" Content="Limpiar" />
+
+        </StackPanel>
+
         <!--  TabControl principal  -->
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="2">
             <!--  Pestaña de Salidas  -->
             <TabItem Header="Salidas">
                 <Grid>
@@ -40,37 +78,13 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <!--  Filtros  -->
-                    <StackPanel
-                        Grid.Row="0"
-                        Margin="10"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Fecha:" />
-                        <DatePicker Width="150" Margin="0,0,15,0" />
 
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Placa:" />
-                        <TextBox Width="150" Margin="0,0,15,0" />
-
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Autor:" />
-                        <TextBox Width="150" Margin="0,0,15,0" />
-
-                        <Button Width="100" Content="Filtrar" />
-                    </StackPanel>
 
                     <!--  Registros  -->
                     <ListView
                         Grid.Row="1"
                         Margin="10"
-                        ItemsSource="{Binding Entries, Mode=TwoWay}">
+                        ItemsSource="{Binding Entries.AsObservable}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn
@@ -125,37 +139,11 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <!--  Filtros  -->
-                    <StackPanel
-                        Grid.Row="0"
-                        Margin="10"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Fecha:" />
-                        <DatePicker Width="150" Margin="0,0,15,0" />
-
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Placa:" />
-                        <TextBox Width="150" Margin="0,0,15,0" />
-
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Autor:" />
-                        <TextBox Width="150" Margin="0,0,15,0" />
-
-                        <Button Width="100" Content="Filtrar" />
-                    </StackPanel>
-
                     <!--  Registros  -->
                     <ListView
                         Grid.Row="1"
                         Margin="10"
-                        ItemsSource="{Binding Issues}">
+                        ItemsSource="{Binding Issues.AsObservable}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn
@@ -211,38 +199,12 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <!--  Filtros  -->
-                    <StackPanel
-                        Grid.Row="0"
-                        Grid.ColumnSpan="2"
-                        Margin="10,10,10,10"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Fecha:" />
-                        <DatePicker Width="150" Margin="0,0,15,0" />
-
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Placa:" />
-                        <TextBox Width="150" Margin="0,0,15,0" />
-
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="Autor:" />
-                        <TextBox Width="150" Margin="0,0,15,0" />
-                        <Button Width="100" Content="Filtrar" />
-                    </StackPanel>
-
                     <!--  Registros  -->
                     <ListView
                         Grid.Row="1"
                         Grid.ColumnSpan="2"
                         Margin="10,10,10,10"
-                        ItemsSource="{Binding Crashes, Mode=TwoWay}">
+                        ItemsSource="{Binding Crashes.AsObservable}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn
