@@ -63,8 +63,16 @@
                 Margin="0,0,15,0"
                 Text="{Binding AuthorToSearch, Mode=OneWayToSource}" />
 
-            <Button Width="80" Margin="2" Content="Filtrar" Command="{Binding ISearch}" />
-            <Button Width="80" Margin="2" Content="Limpiar" />
+            <Button
+                Width="80"
+                Margin="2"
+                Command="{Binding ISearch}"
+                Content="Filtrar" />
+            <Button
+                Width="80"
+                Margin="2"
+                Command="{Binding ICleanCommand}"
+                Content="Limpiar" />
 
         </StackPanel>
 

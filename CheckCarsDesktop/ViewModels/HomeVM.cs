@@ -29,6 +29,7 @@ namespace CheckCarsDesktop.ViewModels
             ISeeIssueReport = new RelayCommand<string>(e => Seeissue(e));
             ISeeCarsReport = new RelayCommand(() => CarsList());
             ISearch = new RelayCommand(() => SearchAsync());
+            ICleanCommand = new RelayCommand(async () => await CleanInputsAsync());
         }
 
 
@@ -39,6 +40,7 @@ namespace CheckCarsDesktop.ViewModels
         public RelayCommand<string> ISeeIssueReport { get; set; }
         public RelayCommand<string> ISeeCrashReport { get; set; }
         public RelayCommand ISearch { get; set; }
+        public RelayCommand ICleanCommand { get; set; }
         #endregion
 
         #region Properties
@@ -136,6 +138,22 @@ namespace CheckCarsDesktop.ViewModels
             CarList carList = new CarList();
             carList.ShowDialog();
         }
+        private async Task CleanInputsAsync()
+        {
+            DateToSearch = DateTime.MinValue;
+            Plate = string.Empty;
+            AuthorToSearch = string.Empty;
+            loadDefault();
+            await Task.CompletedTask;
+        }
+        private async Task loadDefault()
+        {
+
+            LoadDefaultEntries();
+            LoadDefaultIssues();
+            LoadDefaultCrashes();
+            await Task.CompletedTask;
+        }
         private async void LoadDefaultEntries()
         {
             try
@@ -209,9 +227,9 @@ namespace CheckCarsDesktop.ViewModels
         private void SearchAsync()
         {
             SearchEntriesAsync();
-            //   SearchIssuesAsync();
-            // SearchCrashesAsync();
-            //    Task.WaitAll();
+            SearchIssuesAsync();
+            SearchCrashesAsync();
+            Task.WaitAll();
         }
 
         private async void SearchEntriesAsync()
@@ -258,13 +276,93 @@ namespace CheckCarsDesktop.ViewModels
                 throw; // Se relanza la excepción para que el llamador pueda manejarla
             }
         }
-
         private async Task SearchIssuesAsync()
         {
+            try
+            {
+                // Construcción de los parámetros de consulta
+                var queryParameters = new List<string>();
 
+                if (DateToSearch != DateTime.MinValue)
+                {
+                    queryParameters.Add($"date={DateToSearch:yyyy-MM-dd}");
+                }
+
+                if (!string.IsNullOrEmpty(Plate))
+                {
+                    queryParameters.Add($"plate={Uri.EscapeDataString(Plate)}");
+                }
+
+                if (!string.IsNullOrEmpty(AuthorToSearch))
+                {
+                    queryParameters.Add($"author={Uri.EscapeDataString(AuthorToSearch)}");
+                }
+
+                // Construcción del endpoint con parámetros de consulta
+                var endpoint = "api/IssueReports/search";
+                if (queryParameters.Any())
+                {
+                    endpoint = $"{endpoint}?{string.Join("&", queryParameters)}";
+                }
+
+                // Llamada al servicio API
+                var data = await _APIService.GetAsync<IEnumerable<IssueReport>>(endpoint, TimeSpan.FromSeconds(10));
+
+                Issues = new();
+                Issues.AddRange(data);
+
+
+            }
+            catch (Exception ex)
+            {
+                // Manejo de la excepción
+                Console.Error.WriteLine($"Error al buscar entradas: {ex.Message}");
+                throw; // Se relanza la excepción para que el llamador pueda manejarla
+            }
         }
         private async Task SearchCrashesAsync()
         {
+            try
+            {
+                // Construcción de los parámetros de consulta
+                var queryParameters = new List<string>();
+
+                if (DateToSearch != DateTime.MinValue)
+                {
+                    queryParameters.Add($"date={DateToSearch:yyyy-MM-dd}");
+                }
+
+                if (!string.IsNullOrEmpty(Plate))
+                {
+                    queryParameters.Add($"plate={Uri.EscapeDataString(Plate)}");
+                }
+
+                if (!string.IsNullOrEmpty(AuthorToSearch))
+                {
+                    queryParameters.Add($"author={Uri.EscapeDataString(AuthorToSearch)}");
+                }
+
+                // Construcción del endpoint con parámetros de consulta
+                var endpoint = "api/CrashReports/search";
+                if (queryParameters.Any())
+                {
+                    endpoint = $"{endpoint}?{string.Join("&", queryParameters)}";
+                }
+
+                // Llamada al servicio API
+                var data = await _APIService.GetAsync<IEnumerable<CrashReport>>(endpoint, TimeSpan.FromSeconds(10));
+
+                Crashes = new();
+                Crashes.AddRange(data);
+
+
+            }
+            catch (Exception ex)
+            {
+                // Manejo de la excepción
+                Console.Error.WriteLine($"Error al buscar entradas: {ex.Message}");
+                throw; // Se relanza la excepción para que el llamador pueda manejarla
+            }
         }
 
         #endregion
